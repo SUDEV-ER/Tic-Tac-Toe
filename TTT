@@ -1,0 +1,150 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+char boardpicture[10] = { 'o', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+int choice, player;
+
+int winOrlose();
+void board();
+void boardMarking(char mark);
+
+int main()
+{
+    int gameStatus;
+    char mark;
+    player = 1;
+
+    do
+    {
+      board();
+
+      // change turns
+      player = (player % 2) ? 1 : 2;
+
+      // get input
+      printf("Player %d, enter a number: ", player);
+      scanf("%d", &choice);
+
+      // set the correct character based on player turn
+      mark = (player == 1) ? 'X' : 'O';
+
+      // set board based on user choice or invalid choice
+      boardMarking(mark);
+
+      gameStatus = winOrlose();
+
+      player++;
+
+    }while (gameStatus == -1);
+
+    if (gameStatus == 1)
+        printf("==>\aPlayer %d win ", --player);
+    else
+        printf("==>\aGame draw");
+
+    return 0;
+}
+
+//FUNCTION TO RETURN GAME STATUS//
+
+int winOrlose()
+{
+    int returnValue = 0;
+
+    if (boardpicture[1] == boardpicture[2] && boardpicture[2] == boardpicture[3])
+    {
+        returnValue = 1;
+    }
+    else if (boardpicture[4] == boardpicture[5] && boardpicture[5] == boardpicture[6])
+        returnValue = 1;
+
+    else if (boardpicture[7] == boardpicture[8] && boardpicture[8] == boardpicture[9])
+        returnValue = 1;
+
+    else if (boardpicture[1] == boardpicture[4] && boardpicture[4] == boardpicture[7])
+        returnValue = 1;
+
+    else if (boardpicture[2] == boardpicture[5] && boardpicture[5] == boardpicture[8])
+        returnValue = 1;
+
+    else if (boardpicture[3] == boardpicture[6] && boardpicture[6] == boardpicture[9])
+        returnValue = 1;
+
+    else if (boardpicture[1] == boardpicture[5] && boardpicture[5] == boardpicture[9])
+        returnValue = 1;
+
+    else if (boardpicture[3] == boardpicture[5] && boardpicture[5] == boardpicture[7])
+        returnValue = 1;
+
+    else if (boardpicture[1] != '1' && boardpicture[2] != '2' && boardpicture[3] != '3' && boardpicture[4] != '4' && boardpicture[5] != '5' && boardpicture[6] != '6' && boardpicture[7] != '7' && boardpicture[8] != '8' && boardpicture[9] != '9')
+        returnValue = 0;
+    else
+        returnValue = -1;
+
+    return returnValue;
+}
+
+//FUNCTION TO DRAW BOARD OF TIC TAC TOE WITH PLAYERS MARK//
+
+void board()
+{
+    system("cls");
+
+    printf("\n\n\tTic Tac Toe\n\n");
+
+    printf("Player 1 (X)  -  Player 2 (O)\n\n\n");
+
+    printf("     |     |     \n");
+    printf("  %c  |  %c  |  %c \n", boardpicture[1], boardpicture[2], boardpicture[3]);
+
+    printf("_____|_____|_____\n");
+    printf("     |     |     \n");
+
+    printf("  %c  |  %c  |  %c \n", boardpicture[4], boardpicture[5], boardpicture[6]);
+
+    printf("_____|_____|_____\n");
+    printf("     |     |     \n");
+
+    printf("  %c  |  %c  |  %c \n", boardpicture[7], boardpicture[8], boardpicture[9]);
+
+    printf("     |     |     \n\n");
+}
+
+//set the board with the correct character,
+x or o in the correct spot in the array//
+
+void boardMarking(char mark)
+{
+    if (choice == 1 && boardpicture[1] == '1')
+        boardpicture[1] = mark;
+
+    else if (choice == 2 && boardpicture[2] == '2')
+        boardpicture[2] = mark;
+
+    else if (choice == 3 && boardpicture[3] == '3')
+        boardpicture[3] = mark;
+
+    else if (choice == 4 && boardpicture[4] == '4')
+        boardpicture[4] = mark;
+
+    else if (choice == 5 && boardpicture[5] == '5')
+        boardpicture[5] = mark;
+
+    else if (choice == 6 && boardpicture[6] == '6')
+        boardpicture[6] = mark;
+
+    else if (choice == 7 && boardpicture[7] == '7')
+        boardpicture[7] = mark;
+
+    else if (choice == 8 && boardpicture[8] == '8')
+        boardpicture[8] = mark;
+
+    else if (choice == 9 && boardpicture[9] == '9')
+        boardpicture[9] = mark;
+    else
+    {
+        printf("Invalid move ");
+
+        player--;
+    }
+}
